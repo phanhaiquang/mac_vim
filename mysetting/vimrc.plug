@@ -19,7 +19,6 @@ else
 call plug#begin('~/.vim/plugged')
 end
   Plug 'preservim/nerdcommenter'
-  Plug 'itchyny/lightline.vim'
   Plug 'mhartington/oceanic-next'
 
   Plug 'tpope/vim-haml', {'for': ['haml', 'sass', 'scss']}
@@ -45,13 +44,13 @@ end
   Plug 'nachumk/systemverilog.vim', {'for': ['verilog', 'systemverilog']}
   Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
 
-  " lint checker
+  "" lint checker
   Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'slim', 'erb']}
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
-  " these plugins will be loaded on custom condition
+  "" these plugins will be loaded on custom condition
   Plug 'SirVer/ultisnips'
   Plug 'jiangmiao/auto-pairs', {'for': ['ruby', 'python', 'rust', 'dart', 'javascript', 'scss']}
   Plug 'honza/vim-snippets', {'for': ['ruby', 'python', 'rust', 'dart']}
@@ -62,12 +61,14 @@ end
   Plug 'dart-lang/dart-vim-plugin'
   Plug 'isRuslan/vim-es6', {'for': ['javascript', 'jsx', 'javascript.jsx']}
 
+  Plug 'w0rp/ale'
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'ctrlpvim/ctrlp.vim'
+
+    "Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
     Plug 'github/copilot.vim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
-
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
     " LSP
@@ -75,19 +76,32 @@ end
     Plug 'prabirshrestha/vim-lsp'
     Plug 'neovim/nvim-lspconfig'
     Plug 'glepnir/lspsaga.nvim'
-  else
-    Plug 'ctrlpvim/ctrlp.vim', {'do': ':CtrpInstall'}
-    Plug 'w0rp/ale'
-    Plug 'natebosch/vim-lsc'
-    Plug 'natebosch/vim-lsc-dart'
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-    Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
+
+    " COC
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'yaegassy/coc-typeprof', {'for': ['ruby']}
+
+    " Deoplete eco system from https://github.com/Shougo/deoplete.nvim/wiki/Completion-Sources
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'lighttiger2505/deoplete-vim-lsp'
+    Plug 'wokalski/autocomplete-flow'
+    Plug 'Shougo/neosnippet'
+    Plug 'Shougo/neosnippet-snippets'
+    Plug 'Shougo/neco-vim'
+    Plug 'deoplete-plugins/deoplete-zsh'
+    Plug 'deoplete-plugins/deoplete-lsp'
+  else
+    Plug 'itchyny/lightline.vim'
+    Plug 'ctrlpvim/ctrlp.vim', {'do': ':CtrpInstall'}
+    Plug 'natebosch/vim-lsc'
+    Plug 'natebosch/vim-lsc-dart'
+    Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
     " do not work at Vietnam country
     "Plug 'tom-doerr/vim_codex'
+
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
   end
 
 call plug#end()
@@ -112,15 +126,15 @@ function! LoadConfigs()
   call LoadConfig(".", "~/.vim/mysetting/bookmark.vim")
   call LoadConfig(".", "~/.vim/mysetting/ansiesc.vim")
   call LoadConfig(".", "~/.vim/mysetting/moveline.vim")
+  call LoadConfig("ctrlp", "~/.vim/mysetting/ctrlp.vim")
   call LoadConfig("Align", "~/.vim/mysetting/align.vim")
   call LoadConfig("vim-test", "~/.vim/mysetting/vim-test.vim")
   call LoadConfig("deoplete", "~/.vim/mysetting/deoplete.vim")
   call LoadConfig("telescope", "~/.vim/mysetting/telescope.vim")
   call LoadConfig("nvim-lspconfig", "~/.vim/mysetting/lsp.vim")
   call LoadConfig("lspsaga", "~/.vim/mysetting/lspsaga.vim")
-  call LoadConfig("ctrlp", "~/.vim/mysetting/ctrlp.vim")
   call LoadConfig("vim-rails", "~/.vim/mysetting/rails.vim")
-  call LoadConfig("cscope", "~/.vim/mysetting/cscope.vim")
+  ""call LoadConfig("cscope", "~/.vim/mysetting/cscope.vim")
   call LoadConfig("vim-surround", "~/.vim/mysetting/surround.vim")
   call LoadConfig("ultisnips", "~/.vim/mysetting/ultisnips.vim")
   call LoadConfig("supertab", "~/.vim/mysetting/supertab.vim")
@@ -137,6 +151,7 @@ function! LoadConfigs()
   call LoadConfig("fugitive", "~/.vim/mysetting/fugitive.vim")
   call LoadConfig("nerdtree", "~/.vim/mysetting/nerdtree.vim")
   call LoadConfig("flutter", "~/.vim/mysetting/flutter.vim")
+  call LoadConfig("ddc.vim", "~/.vim/mysetting/ddc.vim")
+  call LoadConfig("coc.nvim", "~/.vim/mysetting/coc.vim")
 endfunction
 :autocmd! VimEnter * call LoadConfigs()
-

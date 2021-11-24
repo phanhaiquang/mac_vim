@@ -33,7 +33,7 @@ let g:ale_fixers['javascript'] = ['prettier', 'eslint', 'prettier_standard']
 let g:ale_javascript_prettier_options = '--trailing-comma es5 --write'
 
 " ruby
-let g:ale_fixers['ruby'] = ['prettier', 'rubocop']
+let g:ale_fixers['ruby'] = ['prettier', 'prettier_standard', 'rubocop']
 "let g:ale_ruby_rubocop_options = '--auto-correct-all --disable-uncorrectable'
 "let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_ruby_rubocop_auto_correct_all = 1
