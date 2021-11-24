@@ -1,273 +1,142 @@
-"--------- Plugin manager load
+let user_autocmd = {}
 filetype indent plugin on
+set ignorecase smartcase
 
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+function! LoadConfig(plugin_name, config_path)
+  if len(filter(values(g:plugs), 'v:val.dir =~ "' . a:plugin_name . '"'))
+    exec ":so " . a:config_path
+  endif
+endfunction
+
+if has('nvim')
+call plug#begin('~/.config/nvim/plugged')
+else
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdcommenter'
-"Plug 'godlygeek/csapprox'
-Plug 'itchyny/lightline.vim'
-Plug 'mhartington/oceanic-next'
+end
+  Plug 'preservim/nerdcommenter'
+  Plug 'itchyny/lightline.vim'
+  Plug 'mhartington/oceanic-next'
 
-Plug 'tpope/vim-haml', {'for': ['haml', 'sass', 'scss']}
-Plug 'mklabs/vim-backbone', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-Plug 'tpope/vim-bundler', {'on': ['Bundle']}
-Plug 'tpope/vim-surround'
-Plug 'groenewege/vim-less', {'for': ['less']}
-Plug 'Shutnik/jshint2.vim', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-Plug 'Shougo/neocomplcache'
-Plug 'mattn/emmet-vim', {'for': ['html']}
-Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-Plug 'tpope/vim-dispatch', {'on': ['Make', 'Copen', 'Dispatch', 'Focus'], 'branch': 'job'}
-Plug 'mileszs/ack.vim', {'on': 'Ack'}
-Plug 'ecomba/vim-ruby-refactoring', {'on': ['RExtractMethod', 'RExtractLocalVariable']}
-Plug 'JazzCore/neocomplcache-ultisnips', {'for': ['ruby', 'javascript']}
-Plug 'tpope/vim-rails', {'for': ['ruby', 'slim', 'erb']}
-Plug 'janko-m/vim-test', {'on': ['TestNearest', 'TestLast', 'TestFile']}
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
-Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'jpalardy/vim-slime', {'on': ['SlimeConfig', 'SlimeSend']}
-Plug 'dbakker/vim-projectroot'
-Plug 'slim-template/vim-slim', {'for': ['slim']}
-Plug 'Yggdroot/indentLine'
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-Plug 'isRuslan/vim-es6', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-Plug 'flowtype/vim-flow', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-"Plug 'ap/vim-css-color', {'for': ['css', 'scss']}
-Plug 'vim-scripts/Align', {'on': 'Align'}
-Plug 'vim-scripts/cscope.vim', {'for': ['ruby', 'javascript']}
-Plug 'nachumk/systemverilog.vim', {'for': ['verilog', 'systemverilog']}
-Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
+  Plug 'tpope/vim-haml', {'for': ['haml', 'sass', 'scss']}
+  Plug 'tpope/vim-bundler', {'on': ['Bundle']}
+  Plug 'tpope/vim-surround'
+  Plug 'groenewege/vim-less', {'for': ['less']}
+  Plug 'mattn/emmet-vim', {'for': ['html', 'eruby', 'erb', 'scss', 'css']}
+  Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
+  Plug 'tpope/vim-dispatch', {'on': ['Make', 'Copen', 'Dispatch', 'Focus'], 'branch': 'job'}
+  Plug 'mileszs/ack.vim', {'on': 'Ack'}
+  Plug 'ecomba/vim-ruby-refactoring', {'on': ['RExtractMethod', 'RExtractLocalVariable']}
+  Plug 'tpope/vim-rails', {'for': ['ruby', 'slim', 'erb']}
+  Plug 'janko-m/vim-test', {'on': ['TestNearest', 'TestLast', 'TestFile']}
+  Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-sleuth'
+  Plug 'kien/rainbow_parentheses.vim'
+  Plug 'jpalardy/vim-slime', {'on': ['SlimeConfig', 'SlimeSend']}
+  Plug 'dbakker/vim-projectroot'
+  Plug 'slim-template/vim-slim', {'for': ['slim']}
+  Plug 'Yggdroot/indentLine'
+  Plug 'vim-scripts/Align', {'on': 'Align'}
+  Plug 'vim-scripts/cscope.vim'
+  Plug 'nachumk/systemverilog.vim', {'for': ['verilog', 'systemverilog']}
+  Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
 
-" lint checker
-"Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale', {'for': ['ruby', 'javascript']}
+  " lint checker
+  Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'slim', 'erb']}
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'slim', 'erb']}
-Plug 'tpope/vim-endwise', {'for': ['ruby', 'javascript']}
+  " these plugins will be loaded on custom condition
+  Plug 'SirVer/ultisnips'
+  Plug 'jiangmiao/auto-pairs', {'for': ['ruby', 'python', 'rust', 'dart', 'javascript', 'scss']}
+  Plug 'honza/vim-snippets', {'for': ['ruby', 'python', 'rust', 'dart']}
+  Plug 'vim-scripts/SyntaxComplete', {'for': ['ruby', 'python', 'rust', 'dart']}
+  Plug 'pocke/rbs.vim', {'for': ['rbs']}
 
-"
-"Plug 'vim-scripts/vcscommand.vim', {'on': ['VCSAdd', 'VCSAnnotate', 'VCSBlame', 'VCSCommit', 'VCSDelete', 'VCSDiff', 'VCSGotoOriginal', 'VCSLog', 'VCSRemove', 'VCSRevert', 'VCSReview', 'VCSStatus', 'VCSUpdate', 'VCSVimDiff']}
+  Plug 'thosakwe/vim-flutter'
+  Plug 'dart-lang/dart-vim-plugin'
+  Plug 'isRuslan/vim-es6', {'for': ['javascript', 'jsx', 'javascript.jsx']}
 
-" Diff 2 branches by 'vim-merginal', then compare individual file 
-" with another by 'vim-fugitive'. Using "gd" and "ds"
-Plug 'idanarye/vim-merginal'
-Plug 'tpope/vim-fugitive'
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'github/copilot.vim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" these plugins will be loaded on custom condition
-"Plug 'SirVer/ultisnips', {'on': []}
-Plug 'ervandew/supertab', {'on': []}
-Plug 'jiangmiao/auto-pairs', {'on': []}
-Plug 'honza/vim-snippets', {'on': []}
-Plug 'vim-scripts/SyntaxComplete', {'on': []}
-
-"-------------------------- temporarily unused ----------------------------
-
-"Plug 'MattesGroeger/vim-bookmarks'
-"Plug 'moll/vim-node', {'for': ['javascript', 'jsx', 'javascript.jsx']}
-"Plug 'tpope/vim-cucumber', {'for': ['ruby']}
-"Plug 'vim-scripts/taglist.vim'
-"Plug 'vim-scripts/sudo.vim'
-"Plug 'phanhaiquang/ctrlp.vim'
-"Plug 'phanhaiquang/vim-ruby', {'for': ['ruby', 'slim', 'erb']}
-"Plug 'phanhaiquang/vim-endwise'
-"Plug 'phanhaiquang/xml.vim', {'for': ['xml', 'html']}
-"Plug 'phanhaiquang/AutoTag'
-"Plug 'phanhaiquang/xmledit', {'for': ['html', 'xml']}
-"Plug 'phanhaiquang/nerdcommenter'
-
-""Color theme
-"Plug 'jonathanfilip/vim-lucius'
-"Plug 'w0ng/vim-hybrid'
-"Plug 'junegunn/seoul256.vim'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'altercation/vim-colors-solarized'
+    " LSP
+    Plug 'williamboman/nvim-lsp-installer'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'glepnir/lspsaga.nvim'
+  else
+    Plug 'ctrlpvim/ctrlp.vim', {'do': ':CtrpInstall'}
+    Plug 'w0rp/ale'
+    Plug 'natebosch/vim-lsc'
+    Plug 'natebosch/vim-lsc-dart'
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'yaegassy/coc-typeprof', {'for': ['ruby']}
+    " do not work at Vietnam country
+    "Plug 'tom-doerr/vim_codex'
+  end
 
 call plug#end()
 "--------- Plugin manager end
 
-" these plugins are loaded when enter edit mode
-augroup load_on_enter
-   autocmd!
-   autocmd InsertEnter * call plug#load('ultisnips', 'supertab', 'auto-pairs', 'vim-snippets', 'SyntaxComplete')
-            \| autocmd! load_on_enter
-augroup END
-
-let mapleader = ","
-
-" https://github.com/vim/vim/issues/555
-syntax on
-
-"Indent
-"set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-set wrap! nu nobackup writebackup
-
-"should use virtual-mode
-map <C-W><C-D> :'q,'wd<CR>
-map <C-W><C-Y> :'q,'wy<CR>
-
-map ,ll :normal @e<CR>                           | "loop for a @e
-
-map ,mm :call ToggleMouseSetting()<CR>           | "toggle mouse
-
-" map double click to open a file
-":nnoremap <2-LeftMouse> :normal gf<CR>
-
-"clipboard
-set clipboard=autoselect
-
-"alignment
-map ,=  :Align \s=\s<CR>
-
-"insert ';' or ','
-map  ;; mt])A;<ESC>`t
-imap ;; <ESC>mt])A;<ESC>`ta
-"map ,, mt]}A,<ESC>`t
-"imap ,, <ESC>mt]}A,<ESC>`ta
-
-"session
-:nmap ,ss :mksession! ~/.vim/session/
-:nmap ,os :so ~/.vim/session/
-
-
-"--- TAB setting
-"quickfix use current tab if exist
-"set switchbuf=usetab,newtab
-set switchbuf=usetab
-map ,nt :set switchbuf=usetab,newtab<CR>         | "new tab
-map ,st :set switchbuf=usetab<CR>               | "same tab
-
-"mapping
-:nmap <c-l> :tabn<CR>
-:nmap <c-h> :tabp<CR>
-:nmap ,ta :tab sball<CR>
-
-" Uncomment the following to have Vim jump to the last position when                                                       
-" reopening a file
-if has("autocmd")
-   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+if !has("nvim")
+  set clipboard=autoselect
 endif
 
-" Use pathogen to load plugins from bundle directory
-"filetype off
-"call pathogen#incubate()
-"filetype on
-
-" auto indent
-"map ,= gg=G
-
-map ,b :'<,'>normal 
-
-
-
-
-"set filename
-set isfname-=,:
-
-"auto reload
-":set ar
-
-let g:gitdir = projectroot#get()
-map ,cr :execute "cd " g:gitdir<CR>
-
-"set path for Linux command execution
-set path+=.
-
-"set t_Co=256
-let g:CSApprox_konsole = 1
-
-"set guifont="courier new":h10:w5
-"set guifont="ubuntu mono":h11:w5
-set guifont=Monaco:h13
-
-"verilog
-autocmd FileType verilog let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"' }
-"""
-
-"do not hide quote in JSON
-set conceallevel=0
-
-so ~/.vim/mysetting/all.vim
-
-map <c-j> :normal $V%,cc<CR>:normal $%<CR>
-map <c-k> :normal $V%,c <CR>
-map <c-J> :normal V%,cc<CR>:normal $%<CR>
-map <c-K> :normal V%,c <CR>
-"map == :normal V%=<CR>%
-map == =%
-map ,yj :normal V%y<CR>
-map ,dj :normal V%d<CR>
-map ''  ysiw'
-map ""  ysiw"
-map vv  [mV]M
-map v{  [{V%
-
-"set paste
-map <leader>pp :set invpaste<CR>
-
-map <F2> :update<CR>
-imap <F2> <ESC>:update<CR>
-runtime macros/matchit.vim
-"autocmd FileType html let b:match_words = '<\(\w\w*\):</\1,{:}'
-"autocmd FileType xhtml let b:match_words = '<\(\w\w*\):</\1,{:}'
-"autocmd FileType xml let b:match_words = '<\(\w\w*\):</\1,{:}'
-
-set iskeyword+=-
-
-set autoread
-au CursorHold * checktime
-
-"for fish-shell
-set shell=/bin/bash
-set ignorecase infercase
-set incsearch hlsearch
-"set cmdheight=2
-set ruler
-set nocompatible
-set nolist
-set nostartofline
-
-set autowriteall
-
-"no flash
-let belloff="all"
-set novisualbell
-
-map ,nn :set invnu<CR>
-map ,ww :set invwrap<CR>
-map ,cd :call CdToCurrentPath()<CR>
-
-"replace tab by spaces
-map ,<tab><tab> :set tabstop=2 softtabstop=2 noexpandtab<CR>:retab!<CR>:set expandtab<CR>:retab!<CR>
-
-"add js/erb subfix
-"set autochdir
-"set suffixesadd+=.js,.erb,.jsx
-"nmap gf <c-w>gf
-"autocmd FileType javascript.jsx set includeexpr=
-
-noremap + :
-
-au FileType json setlocal equalprg=python\ -m\ json.tool
-
-"for nativation performance
-" https://andrewbrookins.com/tech/slow-scrolling-in-vim-and-macvim-on-os-x-increase-key-repeat-settings/
-set nocursorline
-set lazyredraw
-set synmaxcol=80
-
 map <D-v> :set paste<CR>:normal <D-v>:normal paste!
-map <Leader>gg :Merginal<CR>
 
-"vim-test
-let test#strategy = "dispatch"
-map <Leader>tc :TestNearest<CR>
-map <Leader>tl :TestLast<CR>
-map <f9> :TestLast<CR>
-autocmd BufRead,BufNewFile *_spec.rb map >> :execute "cd " projectroot#get()<CR>:TestNearest<CR>
+function! LoadConfigs()
+  call LoadConfig(".", "~/.vim/mysetting/general.vim")
+  call LoadConfig(".", "~/.vim/mysetting/fold.vim")
+  call LoadConfig(".", "~/.vim/mysetting/unicode.vim")
+  call LoadConfig(".", "~/.vim/mysetting/web.vim")
+  call LoadConfig(".", "~/.vim/mysetting/function.vim")
+  call LoadConfig(".", "~/.vim/mysetting/ack.vim")
+  call LoadConfig(".", "~/.vim/mysetting/refresh.vim")
+  call LoadConfig(".", "~/.vim/mysetting/colorstheme.vim")
+  call LoadConfig(".", "~/.vim/mysetting/flow.vim")
+  call LoadConfig(".", "~/.vim/mysetting/bookmark.vim")
+  call LoadConfig(".", "~/.vim/mysetting/ansiesc.vim")
+  call LoadConfig(".", "~/.vim/mysetting/moveline.vim")
+  call LoadConfig("Align", "~/.vim/mysetting/align.vim")
+  call LoadConfig("vim-test", "~/.vim/mysetting/vim-test.vim")
+  call LoadConfig("deoplete", "~/.vim/mysetting/deoplete.vim")
+  call LoadConfig("telescope", "~/.vim/mysetting/telescope.vim")
+  call LoadConfig("nvim-lspconfig", "~/.vim/mysetting/lsp.vim")
+  call LoadConfig("lspsaga", "~/.vim/mysetting/lspsaga.vim")
+  call LoadConfig("ctrlp", "~/.vim/mysetting/ctrlp.vim")
+  call LoadConfig("vim-rails", "~/.vim/mysetting/rails.vim")
+  call LoadConfig("cscope", "~/.vim/mysetting/cscope.vim")
+  call LoadConfig("vim-surround", "~/.vim/mysetting/surround.vim")
+  call LoadConfig("ultisnips", "~/.vim/mysetting/ultisnips.vim")
+  call LoadConfig("supertab", "~/.vim/mysetting/supertab.vim")
+  call LoadConfig("vim-es6", "~/.vim/mysetting/javascript.vim")
+  call LoadConfig("auto-pairs", "~/.vim/mysetting/auto_pairs.vim")
+  call LoadConfig("emmet", "~/.vim/mysetting/emmet.vim")
+  call LoadConfig("nerdcommenter", "~/.vim/mysetting/nerdcommenter.vim")
+  call LoadConfig("rainbow", "~/.vim/mysetting/rainbow.vim")
+  call LoadConfig("slime", "~/.vim/mysetting/slime.vim")
+  call LoadConfig("indentLine", "~/.vim/mysetting/indentLine.vim")
+  call LoadConfig("snippets", "~/.vim/mysetting/snippets.vim")
+  call LoadConfig("ale", "~/.vim/mysetting/ale.vim")
+  call LoadConfig("splitjoin", "~/.vim/mysetting/splitjoin.vim")
+  call LoadConfig("fugitive", "~/.vim/mysetting/fugitive.vim")
+  call LoadConfig("nerdtree", "~/.vim/mysetting/nerdtree.vim")
+  call LoadConfig("flutter", "~/.vim/mysetting/flutter.vim")
+endfunction
+:autocmd! VimEnter * call LoadConfigs()
+

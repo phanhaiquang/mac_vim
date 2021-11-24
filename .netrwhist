@@ -1,3 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
-let g:netrw_dirhist_1='/Users/quangp/Code/ticker/build'
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/Users/quangp/Code/pschool/avaya-sdk-example/src/components'
+let g:netrw_dirhist_8='/Users/quangp/Code/pschool/webapp/app/javascript/components/space'
+let g:netrw_dirhist_7='/Users/quangp/Code/pschool/webapp/app/javascript/components'
+let g:netrw_dirhist_6='/Users/quangp/Code/SimpleLabx/simpledrive-webapp/app/javascript/react-app'
+let g:netrw_dirhist_5='/Users/quangp/Code/SimpleLabx/simpledrive-webapp/app/javascript/components'
+let g:netrw_dirhist_4='/Users/quangp/Code/pschool/webapp/app/javascript'
+let g:netrw_dirhist_3='/Users/quangp/Code/pschool/webapp/app'
+let g:netrw_dirhist_2='/Users/quangp/Code/SimpleLabx/simpledrive-webapp/vendor/javascript'
+let g:netrw_dirhist_1='/Users/quangp/Code/pschool/microsoft-teams-library-js/src'
+let g:netrw_dirhist_0='/Users/quangp/Code/pschool/microsoft-teams-library-js'

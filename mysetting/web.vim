@@ -30,6 +30,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 autocmd BufRead,BufNewFile *.txt setlocal textwidth=60
+"autocmd BufRead,BufNewFile *.html.erb set ft=html.erb
+autocmd BufRead,BufNewFile *.html.erb set ft=eruby
 
 ""Enable line numbers
 "autocmd FileType javascript,css,php set number

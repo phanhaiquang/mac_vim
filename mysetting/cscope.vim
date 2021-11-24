@@ -16,8 +16,16 @@ endif
 "nmap fn :cstag <C-R>=expand("<cword>")<CR><CR>
 "nmap fp <C-T>
 
+" ignore message \"Add cscope database\" when launching
+set nocscopeverbose
+
+:if !empty(glob("cscope.out"))
+  :cscope add cscope.out
+:endif
+
 nmap fs :cs find s <cword><CR>
 nmap fg :cs find g <cword><CR>
+nmap fn :cs find g <cword><CR>
 nmap fc :cs find c <cword><CR>
 nmap ft :cs find t <cword><CR>
 "nmap ff :cs find f <cword><CR>

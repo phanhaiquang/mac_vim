@@ -15,6 +15,5 @@ func! SlimeConfigOrSend()
   endif
 endfunc
 
-map  <f8> :call SlimeConfigOrSend()<CR>
-vmap <f8> <c-c><c-c>'>jVg_%
-
+map  ,sl :call SlimeConfigOrSend()<CR>
+vmap ,sl <c-c><c-c>'>jVg_%
