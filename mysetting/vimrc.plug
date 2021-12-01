@@ -18,20 +18,17 @@ call plug#begin('~/.config/nvim/plugged')
 else
 call plug#begin('~/.vim/plugged')
 end
-  Plug 'preservim/nerdcommenter' "make comments easier
   Plug 'tpope/vim-haml', {'for': ['haml', 'sass', 'scss']}
   Plug 'tpope/vim-bundler', {'on': ['Bundle']}
   Plug 'groenewege/vim-less', {'for': ['less']}
   Plug 'mattn/emmet-vim', {'for': ['html', 'eruby', 'erb']}
   Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
   Plug 'tpope/vim-dispatch', {'on': ['Make', 'Copen', 'Dispatch', 'Focus'], 'branch': 'job'}
-  Plug 'mileszs/ack.vim', {'on': 'Ack'}
   Plug 'ecomba/vim-ruby-refactoring', {'on': ['RExtractMethod', 'RExtractLocalVariable']}
-  Plug 'tpope/vim-rails', {'for': ['ruby', 'slim', 'erb']}
+  Plug 'tpope/vim-rails', {'for': ['ruby', 'slim', 'erb', 'eruby']}
   Plug 'janko-m/vim-test', {'on': ['TestNearest', 'TestLast', 'TestFile']}
   Plug 'tpope/vim-sensible' "default setup for everyone
   Plug 'tpope/vim-sleuth'  "auto adjust shiftwidth and expandtab
-  Plug 'kien/rainbow_parentheses.vim' "rainbow parentheses
   Plug 'dbakker/vim-projectroot'
   Plug 'jpalardy/vim-slime', {'on': ['SlimeConfig', 'SlimeSend']}
   "Plug 'slim-template/vim-slim', {'for': ['slim']}
@@ -40,11 +37,11 @@ end
   Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
   Plug 'vim-ruby/vim-ruby', {'for': ['ruby', 'slim', 'erb']}
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-endwise'          "match structure by language syntax
+  Plug 'alvan/vim-closetag'         "close HTML tag
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
   Plug 'SirVer/ultisnips', {'for': ['snippets', 'ruby', 'javascript', 'scss', 'html', 'erb', 'css', 'go', 'python', 'perl', 'rust', 'swift', 'typescript', 'verilog', 'systemverilog', 'vhdl', 'yaml']}
-  Plug 'jiangmiao/auto-pairs', {'for': ['ruby', 'python', 'rust', 'dart', 'javascript', 'scss']}
   Plug 'honza/vim-snippets', {'for': ['ruby', 'python', 'rust', 'dart']}
   Plug 'vim-scripts/SyntaxComplete', {'for': ['ruby', 'python', 'rust', 'dart']}
   Plug 'pocke/rbs.vim', {'for': ['rbs']}
@@ -52,42 +49,82 @@ end
   Plug 'dart-lang/dart-vim-plugin', {'for': ['flutter', 'dart']}
   Plug 'isRuslan/vim-es6', {'for': ['javascript', 'jsx', 'javascript.jsx']}
 
-  Plug 'w0rp/ale'
-  Plug 'mhinz/vim-startify'
+  Plug 'mhinz/vim-startify' " project management
+  Plug 'kien/rainbow_parentheses.vim' "rainbow parentheses
+  Plug 'preservim/nerdcommenter' "make comments easier
+  "Plug 'tpope/vim-commentary' "comment out regions
+
+  " has error when def/end , or when undo
+  Plug 'jiangmiao/auto-pairs', {'for': ['ruby', 'javascript', 'css', 'scss']}
+
+  " LSP does not support all features, still need ALE
+  Plug 'w0rp/ale', {'for': ['ruby', 'javascript', 'html', 'eruby']}
 
   if has('nvim')
     Plug 'mhinz/vim-janah' "colorstheme for neovim
-    Plug 'ctrlpvim/ctrlp.vim' "ctrlp.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
+    "Plug 'joshdick/onedark.vim' "colorstheme for neovim
 
     Plug 'github/copilot.vim' "copilot.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-    " LSP: Language Server Protocol
-    Plug 'williamboman/nvim-lsp-installer'
-    Plug 'prabirshrestha/vim-lsp'
+    Plug 'nvim-lua/completion-nvim'
+
+    " show airline / lightline / status line at bottom of buffer
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+
+    " replace ctrlp by telescope
+    "Plug 'ctrlpvim/ctrlp.vim' "ctrlp.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
+    Plug 'nvim-telescope/telescope.nvim' " search file, definitions
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    
+    " LSP: Language Server Protocol --> look like coc.nvim already cover these ?
+    "Plug 'williamboman/nvim-lsp-installer'
+    "Plug 'prabirshrestha/vim-lsp'
     Plug 'neovim/nvim-lspconfig'
     Plug 'glepnir/lspsaga.nvim'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'} "make nvim as IDE
 
-    " make your nevim becomes modern IDE
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'yaegassy/coc-typeprof', {'for': ['ruby']}
+    " using vim-lsp
+    "Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' } "language client, code action?
+    "Plug 'junegunn/fzf' "multi-entry selection UI
 
     " tab was supported by deoplete
     "Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
 
-    " autocompletion eco system
-    " system from https://github.com/Shougo/deoplete.nvim/wiki/Completion-Sources
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'lighttiger2505/deoplete-vim-lsp'
-    Plug 'wokalski/autocomplete-flow'
-    Plug 'Shougo/neosnippet'
-    Plug 'Shougo/neosnippet-snippets'
-    Plug 'Shougo/neco-vim'
-    Plug 'deoplete-plugins/deoplete-zsh'
-    Plug 'deoplete-plugins/deoplete-lsp'
+    "" autocompletion eco system
+    "" system from https://github.com/Shougo/deoplete.nvim/wiki/Completion-Sources
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "Plug 'lighttiger2505/deoplete-vim-lsp'
+    "Plug 'wokalski/autocomplete-flow'
+    "Plug 'Shougo/neosnippet'
+    "Plug 'Shougo/neosnippet-snippets'
+    "Plug 'Shougo/neco-vim'
+    "Plug 'deoplete-plugins/deoplete-zsh'
+    "Plug 'deoplete-plugins/deoplete-lsp'
+
+    "Plug 'Shougo/ddc.vim'
+    "Plug 'vim-denops/denops.vim'
+    "Plug 'Shougo/ddc-around'
+    "Plug 'Shougo/ddc-matcher_head'
+    "Plug 'Shougo/ddc-sorter_rank'
+    "Plug 'Shougo/neosnippet.vim'
+    "Plug 'Shougo/neosnippet-snippets'
+    "Plug 'Shougo/neco-vim'
+    "Plug 'Shougo/pum.vim'
+    "Plug 'Shougo/ddc-nvim-lsp'
+    "Plug 'LumaKernel/ddc-file'
+    "Plug 'tani/ddc-fuzzy'
+    "Plug 'matsui54/ddc-buffer'
+    "Plug 'delphinus/ddc-treesitter'
+    "Plug 'matsui54/ddc-matcher_fuzzy'
+    "Plug 'Shougo/ddc-nextword'
+    "Plug 'Shougo/ddc-rg'
+    "Plug 'Shougo/ddc-omni'
+    "Plug 'Shougo/ddc-line'
+    "Plug 'matsui54/ddc-dictionary'
   else
+    Plug 'mileszs/ack.vim', {'on': 'Ack'}
     Plug 'mhartington/oceanic-next' "colorstheme
     Plug 'Yggdroot/indentLine'
     Plug 'vim-scripts/cscope.vim'
@@ -96,6 +133,7 @@ end
     Plug 'natebosch/vim-lsc'
     Plug 'natebosch/vim-lsc-dart'
     Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
+
     " do not work at Vietnam country
     "Plug 'tom-doerr/vim_codex'
 
@@ -114,35 +152,36 @@ endif
 map <D-v> :set paste<CR>:normal <D-v>:normal paste!
 
 function! LoadConfigs()
-  call LoadConfig("oceanic-next", "~/.vim/mysetting/oceanic-next.vim")
-  call LoadConfig("vim-janah", "~/.vim/mysetting/janah.vim")
-  call LoadConfig(".", "~/.vim/mysetting/general.vim")
+  " order is matter to make later mapping that override the former one
   call LoadConfig(".", "~/.vim/mysetting/fold.vim")
   call LoadConfig(".", "~/.vim/mysetting/unicode.vim")
   call LoadConfig(".", "~/.vim/mysetting/web.vim")
   call LoadConfig(".", "~/.vim/mysetting/function.vim")
-  call LoadConfig(".", "~/.vim/mysetting/ack.vim")
   call LoadConfig(".", "~/.vim/mysetting/refresh.vim")
   call LoadConfig(".", "~/.vim/mysetting/flow.vim")
   call LoadConfig(".", "~/.vim/mysetting/bookmark.vim")
   call LoadConfig(".", "~/.vim/mysetting/ansiesc.vim")
   call LoadConfig(".", "~/.vim/mysetting/moveline.vim")
+  call LoadConfig("oceanic-next", "~/.vim/mysetting/oceanic-next.vim")
+  call LoadConfig("vim-janah", "~/.vim/mysetting/janah.vim")
+  call LoadConfig("onedark", "~/.vim/mysetting/onedark.vim")
   call LoadConfig("ctrlp", "~/.vim/mysetting/ctrlp.vim")
   call LoadConfig("Align", "~/.vim/mysetting/align.vim")
   call LoadConfig("vim-test", "~/.vim/mysetting/vim-test.vim")
   call LoadConfig("deoplete", "~/.vim/mysetting/deoplete.vim")
   call LoadConfig("telescope", "~/.vim/mysetting/telescope.vim")
-  call LoadConfig("nvim-lspconfig", "~/.vim/mysetting/lsp.vim")
+  call LoadConfig("nvim-lspconfig", "~/.vim/mysetting/lspconfig.vim")
+  call LoadConfig("vim-lsp", "~/.vim/mysetting/lsp.vim")
   call LoadConfig("lspsaga", "~/.vim/mysetting/lspsaga.vim")
   call LoadConfig("vim-rails", "~/.vim/mysetting/rails.vim")
-  ""call LoadConfig("cscope", "~/.vim/mysetting/cscope.vim")
   call LoadConfig("vim-surround", "~/.vim/mysetting/surround.vim")
   call LoadConfig("ultisnips", "~/.vim/mysetting/ultisnips.vim")
   call LoadConfig("supertab", "~/.vim/mysetting/supertab.vim")
   call LoadConfig("vim-es6", "~/.vim/mysetting/javascript.vim")
-  call LoadConfig("auto-pairs", "~/.vim/mysetting/auto_pairs.vim")
+  call LoadConfig("auto-pairs", "~/.vim/mysetting/auto-pairs.vim")
   call LoadConfig("emmet", "~/.vim/mysetting/emmet.vim")
   call LoadConfig("nerdcommenter", "~/.vim/mysetting/nerdcommenter.vim")
+  call LoadConfig("vim-commentary", "~/.vim/mysetting/commentary.vim")
   call LoadConfig("rainbow", "~/.vim/mysetting/rainbow.vim")
   call LoadConfig("slime", "~/.vim/mysetting/slime.vim")
   call LoadConfig("indentLine", "~/.vim/mysetting/indentLine.vim")
@@ -151,8 +190,21 @@ function! LoadConfigs()
   call LoadConfig("splitjoin", "~/.vim/mysetting/splitjoin.vim")
   call LoadConfig("fugitive", "~/.vim/mysetting/fugitive.vim")
   call LoadConfig("nerdtree", "~/.vim/mysetting/nerdtree.vim")
-  call LoadConfig("flutter", "~/.vim/mysetting/flutter.vim")
+  call LoadConfig("vim-flutter", "~/.vim/mysetting/flutter.vim")
+  call LoadConfig("vim-startify", "~/.vim/mysetting/startify.vim")
+  call LoadConfig("ack.vim", "~/.vim/mysetting/ack.vim")
+  call LoadConfig("cscope.vim", "~/.vim/mysetting/cscope.vim")
+  call LoadConfig("LanguageClient", "~/.vim/mysetting/language-client.vim")
+  call LoadConfig("treesitter", "~/.vim/mysetting/treesitter.vim")
+  call LoadConfig("pum.vim", "~/.vim/mysetting/pum.vim")
+  call LoadConfig("vim-airline", "~/.vim/mysetting/airline.vim")
+  call LoadConfig("completion-nvim", "~/.vim/mysetting/completion-nvim.vim")
+
+  " put this at the end to make sure all the mapping is priority for COC
   call LoadConfig("ddc.vim", "~/.vim/mysetting/ddc.vim")
   call LoadConfig("coc.nvim", "~/.vim/mysetting/coc.vim")
+
+  " custom setting and mapping are highest priority
+  call LoadConfig(".", "~/.vim/mysetting/custom.vim")
 endfunction
 :autocmd! VimEnter * call LoadConfigs()

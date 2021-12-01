@@ -1,4 +1,3 @@
-echom 'pum'
 inoremap <Tab>   <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>

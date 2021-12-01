@@ -1,3 +1,19 @@
+" Usage
+"  :CocInstall <ext>      --> https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions
+"  ,dp     coc-diagnostic-prev
+"  ,dn     coc-diagnostic-next
+"  gd      coc-definition
+"  gy      coc-type-definition
+"  gi      coc-implementation
+"  gr      coc-references
+"  K       show_documentation
+"  ,rn     coc-rename
+"  ,f      coc-format-selected
+"  ,aa      coc-codeaction-selected
+"  ,ac     coc-codeaction
+"  ,ff     coc-fix-current
+"  <space>e , <space>f     Explorer
+
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
@@ -56,8 +72,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> ,dp <Plug>(coc-diagnostic-prev)
+nmap <silent> ,dn <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -97,14 +113,10 @@ augroup mygroup
 augroup end
 
 " Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+xmap ,aa  <Plug>(coc-codeaction-selected)
+nmap ,aa  <Plug>(coc-codeaction-selected)
+nmap ,ac  <Plug>(coc-codeaction)
+nmap ,ff  <Plug>(coc-fix-current)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -163,3 +175,50 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" https://www.chrisatmachine.com/Neovim/06-file-explorer/
+" Explorer
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\     'root-uri': '~/.vim',
+\   },
+\   'tab': {
+\     'position': 'tab',
+\     'quit-on-open': v:true,
+\   },
+\   'floating': {
+\     'position': 'floating',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingTop': {
+\     'position': 'floating',
+\     'floating-position': 'center-top',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingLeftside': {
+\     'position': 'floating',
+\     'floating-position': 'left-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingRightside': {
+\     'position': 'floating',
+\     'floating-position': 'right-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'simplify': {
+\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   }
+\ }
+
+nmap <space>e :CocCommand explorer<CR>
+nmap <space>f :CocCommand explorer --preset floating<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+" highlight the diagnostics
+let g:coc_default_semantic_highlight_groups = 1
+hi! CocErrorSign guifg=#d1666a ctermfg=Red ctermbg=Grey
+hi! CocWarningSign guifg=#d1cd66 ctermfg=Yellow  ctermbg=Grey
+hi! CocInfoSign guibg=#353b45 ctermfg=Green ctermbg=Grey
+

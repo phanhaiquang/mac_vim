@@ -103,7 +103,6 @@ set wildmode=longest,full
 
 
 "go to current path (open file, or current dir)
-map ,ww <C-W><C-W>
 :function! ExecuteVCSCommand(command)
 
 ":if (expand('%') =~ "git diff" || expand('%') =~ "git log")
@@ -120,9 +119,6 @@ map ,ww <C-W><C-W>
 :exec a:command
 :endfunction
 
-function! IsFold()
-  return foldclosed(line('.')) != -1
-endfunction
 
 function! UpdateProjectData()
   let g:gitdir = projectroot#get()

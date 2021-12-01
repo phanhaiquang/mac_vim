@@ -1,3 +1,4 @@
+" disable fold to use nvim-treesitter
 "au BufReadPre *css,*scss setlocal foldmethod=indent
 
 "set foldlevelstart=1
@@ -10,7 +11,10 @@
 "let vimsyn_folding='af'       " Vim script
 "let xml_syntax_folding=1      " XML
 
-" space and ctrl-space
-map ,ff setlocal foldmethod=indent
-nnoremap <expr> <C-@> IsFold() ? 'zR' : 'zM'
-nnoremap <expr> <Space> IsFold() ? 'zo' : 'zc'
+"" space and ctrl-space
+"function! IsFold()
+"  return foldclosed(line('.')) != -1
+"endfunction
+""map ,ff setlocal foldmethod=indent
+"nnoremap <expr> <C-@> IsFold() ? 'zR' : 'zM'
+"nnoremap <expr> <Space> IsFold() ? 'zo' : 'zc'

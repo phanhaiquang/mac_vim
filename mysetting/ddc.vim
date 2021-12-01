@@ -40,5 +40,11 @@ inoremap <silent><expr> <TAB>
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
+"" Quang: to avoid conflict with coc.nvim
+"" Pass a dictionary to set multiple options
+"call ddc#custom#patch_global({
+"      \ 'overwriteCompleteopt': v:false,
+"      \ })
+
 " Use ddc.
 call ddc#enable()
