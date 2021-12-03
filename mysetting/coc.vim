@@ -222,3 +222,12 @@ hi! CocErrorSign guifg=#d1666a ctermfg=Red ctermbg=Grey
 hi! CocWarningSign guifg=#d1cd66 ctermfg=Yellow  ctermbg=Grey
 hi! CocInfoSign guibg=#353b45 ctermfg=Green ctermbg=Grey
 
+" coc-flutter : https://github.com/iamcco/coc-flutter
+augroup flutter
+  autocmd!
+  autocmd BufEnter *.dart echo "Hello Flutter"
+  autocmd BufEnter *.dart nnoremap ,fr :CocCommand flutter.run --no-sound-null-safety <cr>
+  autocmd BufEnter *.dart nnoremap ,hr :CocCommand flutter.dev.hotReload <cr>
+  autocmd BufEnter *.dart nnoremap ,hs :CocCommand flutter.dev.hotRestart <cr>
+  autocmd BufEnter *.dart nnoremap ,ss :CocCommand flutter.dev.screenshot <cr>
+augroup end

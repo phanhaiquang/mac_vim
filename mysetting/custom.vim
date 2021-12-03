@@ -6,11 +6,6 @@ set wrap! nu nobackup writebackup
 map <C-W><C-D> :'q,'wd<CR>
 map <C-W><C-Y> :'q,'wy<CR>
 
-"" quickfix use current tab if exist
-"set switchbuf=usetab
-"map ,nt :set switchbuf=usetab,newtab<CR>         | "new tab
-"map ,st :set switchbuf=usetab<CR>               | "same tab
-
 " jump to previous location when open a file
 if has("autocmd")
    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -37,6 +32,7 @@ if has('nvim')
 else
   :set ignorecase infercase
 endif
+
 set incsearch hlsearch
 set ruler
 set nocompatible
@@ -60,26 +56,16 @@ set iskeyword+=-
 
 runtime macros/matchit.vim
 
-" jump to the last position when reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-        \| exe "normal! g'\"" | endif
-endif
-
 " do not hide quote in JSON
 autocmd BufReadPost, BufNewFile *.json setlocal conceallevel=0
 autocmd BufRead,BufNewFile javascript syntax=javascript
 autocmd FileType json setlocal equalprg=python\ -m\ json.tool
 
 " do not change tab to space in Makefile
-autocmd FileType make setlocal set noexpandtab
+autocmd FileType make setlocal noexpandtab
 
 map ,ll :normal @e<CR>                           | "loop for a @e
 map ,mm :call ToggleMouseSetting()<CR>           | "toggle mouse
-
-let g:gitdir = projectroot#get()
-"map ,cr :execute "cd " g:gitdir<CR>
-map ,cr :ProjectRootCD<CR>
 
 map <F2> :update<CR>
 imap <F2> <ESC>:update<CR>
