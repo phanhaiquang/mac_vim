@@ -1,6 +1,10 @@
-let user_autocmd = {}
+"let user_autocmd = {}
 filetype indent plugin on
-set ignorecase smartcase
+syntax on
+
+" need to assign value for "leader" key before loadding plugin
+let mapleader = ","
+let g:user_emmet_leader_key = ',,'
 
 function! Cond(cond, ...)
   let opts = get(a:000, 0, {})
@@ -31,7 +35,7 @@ end
   Plug 'tpope/vim-sleuth'  "auto adjust shiftwidth and expandtab
   Plug 'dbakker/vim-projectroot'
   Plug 'jpalardy/vim-slime', {'on': ['SlimeConfig', 'SlimeSend']}
-  "Plug 'slim-template/vim-slim', {'for': ['slim']}
+  Plug 'slim-template/vim-slim', {'for': ['slim']}
   Plug 'vim-scripts/Align', {'on': 'Align'}
   Plug 'nachumk/systemverilog.vim', {'for': ['verilog', 'systemverilog']}
   Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
@@ -49,7 +53,6 @@ end
   Plug 'dart-lang/dart-vim-plugin', {'for': ['flutter', 'dart']}
   Plug 'isRuslan/vim-es6', {'for': ['javascript', 'jsx', 'javascript.jsx']}
 
-  Plug 'mhinz/vim-startify' " project management
   Plug 'kien/rainbow_parentheses.vim' "rainbow parentheses
   Plug 'preservim/nerdcommenter' "make comments easier
   "Plug 'tpope/vim-commentary' "comment out regions
@@ -61,6 +64,7 @@ end
   Plug 'w0rp/ale', {'for': ['ruby', 'javascript', 'html', 'eruby']}
 
   if has('nvim')
+    Plug 'mhinz/vim-startify' " project management
     Plug 'mhinz/vim-janah' "colorstheme for neovim
     "Plug 'joshdick/onedark.vim' "colorstheme for neovim
 
@@ -79,50 +83,17 @@ end
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     
     " LSP: Language Server Protocol --> look like coc.nvim already cover these ?
-    "Plug 'williamboman/nvim-lsp-installer'
-    "Plug 'prabirshrestha/vim-lsp'
     Plug 'neovim/nvim-lspconfig'
     Plug 'glepnir/lspsaga.nvim'
     Plug 'neoclide/coc.nvim', {'branch': 'release'} "make nvim as IDE
+    
+    " coc.nvim coverred these features ?
+    "Plug 'williamboman/nvim-lsp-installer'
+    "Plug 'prabirshrestha/vim-lsp'
 
-    " using vim-lsp
+    " vim-lsp coverred these features ?
     "Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' } "language client, code action?
     "Plug 'junegunn/fzf' "multi-entry selection UI
-
-    " tab was supported by deoplete
-    "Plug 'ervandew/supertab', {'for': ['ruby', 'python', 'rust', 'dart']}
-
-    "" autocompletion eco system
-    "" system from https://github.com/Shougo/deoplete.nvim/wiki/Completion-Sources
-    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'lighttiger2505/deoplete-vim-lsp'
-    "Plug 'wokalski/autocomplete-flow'
-    "Plug 'Shougo/neosnippet'
-    "Plug 'Shougo/neosnippet-snippets'
-    "Plug 'Shougo/neco-vim'
-    "Plug 'deoplete-plugins/deoplete-zsh'
-    "Plug 'deoplete-plugins/deoplete-lsp'
-
-    "Plug 'Shougo/ddc.vim'
-    "Plug 'vim-denops/denops.vim'
-    "Plug 'Shougo/ddc-around'
-    "Plug 'Shougo/ddc-matcher_head'
-    "Plug 'Shougo/ddc-sorter_rank'
-    "Plug 'Shougo/neosnippet.vim'
-    "Plug 'Shougo/neosnippet-snippets'
-    "Plug 'Shougo/neco-vim'
-    "Plug 'Shougo/pum.vim'
-    "Plug 'Shougo/ddc-nvim-lsp'
-    "Plug 'LumaKernel/ddc-file'
-    "Plug 'tani/ddc-fuzzy'
-    "Plug 'matsui54/ddc-buffer'
-    "Plug 'delphinus/ddc-treesitter'
-    "Plug 'matsui54/ddc-matcher_fuzzy'
-    "Plug 'Shougo/ddc-nextword'
-    "Plug 'Shougo/ddc-rg'
-    "Plug 'Shougo/ddc-omni'
-    "Plug 'Shougo/ddc-line'
-    "Plug 'matsui54/ddc-dictionary'
   else
     Plug 'mileszs/ack.vim', {'on': 'Ack'}
     Plug 'mhartington/oceanic-next' "colorstheme

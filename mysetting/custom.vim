@@ -1,7 +1,3 @@
-" map <leader>
-let mapleader = ","
-syntax on
-
 " indent
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 set wrap! nu nobackup writebackup
@@ -74,6 +70,9 @@ endif
 autocmd BufReadPost, BufNewFile *.json setlocal conceallevel=0
 autocmd BufRead,BufNewFile javascript syntax=javascript
 autocmd FileType json setlocal equalprg=python\ -m\ json.tool
+
+" do not change tab to space in Makefile
+autocmd FileType make setlocal set noexpandtab
 
 map ,ll :normal @e<CR>                           | "loop for a @e
 map ,mm :call ToggleMouseSetting()<CR>           | "toggle mouse

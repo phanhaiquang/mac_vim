@@ -1,6 +1,7 @@
 "leader key for all emmet command
-let g:user_emmet_mode='a'
+let g:user_emmet_mode='inv'
 
+" IMPORTANT: put before plugin loaded !
 "expand a formula to real code
 let g:user_emmet_leader_key = ',,'
 
