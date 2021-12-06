@@ -1,3 +1,5 @@
+" ALE also show the error, however it does not show error inline (diagnose)
+" using coc enable this feature
 lua << EOF
 require'lspconfig'.pyright.setup{}
 -- require'lspconfig'.html.setup{}

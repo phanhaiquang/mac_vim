@@ -1,12 +1,17 @@
 "https://github.com/w0rp/ale/issues/1016
 
 let g:ale_enabled = 1
-let g:ale_linters = {
-\   'javascript': ['prettier', 'eslint'],
-\   'ruby': ['rubocop', 'prettier'],
-\   'eruby': ['erblint', 'erb', 'erubis', 'ruumba', 'tidy'],
-\   'json': ['jsonlint'],
-\}
+
+" if we enable this, it seems conflict with diagnose
+" remove deno from the list because it reports error on import
+let g:ale_linters = {}
+"let g:ale_linters = {
+"\   'javascriptreact': ['cspell', 'eslint', 'fecs', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'tsserver', 'xo'],
+"\   'javascript': ['cspell', 'eslint', 'fecs', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'tsserver', 'xo'],
+"\   'ruby': ['rubocop', 'prettier'],
+"\   'eruby': ['erblint', 'erb', 'erubis', 'ruumba', 'tidy'],
+"\   'json': ['jsonlint'],
+"\}
 
 let g:ale_fixers = {}
 let g:ale_fix_on_save = 1
@@ -23,11 +28,14 @@ map ,ne <Plug>(ale_next)
 " set error/warning signs
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
+let g:ale_sign_info = 'ℹ'
 
 " common for all languages
 let g:ale_fixers['*'] = ['remove_trailing_lines', 'trim_whitespace']
 
 " javascript
+let g:ale_linters['javascript'] = ['prettier_standard', 'eslint', 'prettier']
+let g:ale_linters['javascriptreact'] = ['prettier_standard', 'eslint', 'prettier']
 let g:ale_fixers['javascript'] = ['prettier_standard', 'eslint', 'prettier']
 let g:ale_javascript_prettier_options = '--trailing-comma es5 --write'
 

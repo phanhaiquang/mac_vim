@@ -24,7 +24,7 @@ endfunction
 " check if plugin_name was in installed plugins to load the config_path file
 " because the config_path may contain some "mapping" to enable the plugin,
 " so that mapping always work in the case that plugins was installed even if
-" it is not in the load condition 
+" it is not in the load condition
 function! LoadConfig(plugin_name, config_path)
   if len(filter(values(g:plugs), 'v:val.dir =~ "' . a:plugin_name . '"'))
     exec ":so " . a:config_path
@@ -72,7 +72,7 @@ call plug#begin(PluggedDir())
     Plug 'tpope/vim-rails', {'for': ['ruby', 'slim', 'erb', 'eruby']}
     Plug 'janko-m/vim-test', {'on': ['TestNearest', 'TestLast', 'TestFile']}
     Plug 'jpalardy/vim-slime', {'on': ['SlimeConfig', 'SlimeSend']}
-    "Plug 'slim-template/vim-slim', {'for': ['slim']}
+    Plug 'slim-template/vim-slim', {'for': ['slim']}
     Plug 'vim-scripts/Align', {'on': 'Align'}
     Plug 'nachumk/systemverilog.vim', {'for': ['verilog', 'systemverilog']}
     Plug 'AndrewRadev/splitjoin.vim', {'for': ['ruby']}
@@ -95,7 +95,7 @@ call plug#begin(PluggedDir())
     Plug 'jiangmiao/auto-pairs', {'for': ['ruby', 'javascript', 'css', 'scss']}
 
     " LSP does not support all features, still need ALE
-    Plug 'w0rp/ale', {'for': ['ruby', 'javascript', 'html', 'eruby']}
+    Plug 'w0rp/ale'
 
     if has('nvim')
       Plug 'mhinz/vim-startify' " project management
@@ -115,12 +115,12 @@ call plug#begin(PluggedDir())
       "Plug 'ctrlpvim/ctrlp.vim' "ctrlp.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
       Plug 'nvim-telescope/telescope.nvim' " search file, definitions
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-      
+
       " LSP: Language Server Protocol --> look like coc.nvim already cover these ?
       Plug 'neovim/nvim-lspconfig'
       Plug 'glepnir/lspsaga.nvim'
       Plug 'neoclide/coc.nvim', {'branch': 'release'} "make nvim as IDE
-      
+
       " coc.nvim coverred these features ?
       "Plug 'williamboman/nvim-lsp-installer'
       "Plug 'prabirshrestha/vim-lsp'
@@ -129,6 +129,7 @@ call plug#begin(PluggedDir())
       "Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' } "language client, code action?
       "Plug 'junegunn/fzf' "multi-entry selection UI
     else
+
       Plug 'mileszs/ack.vim', {'on': 'Ack'}
       Plug 'mhartington/oceanic-next' "colorstheme
       Plug 'Yggdroot/indentLine'
@@ -213,6 +214,7 @@ function! LoadConfigs()
     call LoadConfig(".", "~/.vim/mysetting/bookmark.vim")
     call LoadConfig(".", "~/.vim/mysetting/ansiesc.vim")
     call LoadConfig(".", "~/.vim/mysetting/moveline.vim")
+    call LoadConfig(".", "~/.vim/mysetting/cfilter.vim")
   end
 
   call LoadConfig(".", "~/.vim/mysetting/custom.vim")  "custom is highest priority
