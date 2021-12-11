@@ -1,6 +1,6 @@
 " Theme
+syntax on
 syntax enable
-colorscheme OceanicNext
 
 if has('nvim')
   " For Neovim 0.1.3 and 0.1.4
@@ -17,8 +17,11 @@ if has("termguicolors")
   set termguicolors
 endif
 
-"set background=dark
+set background=dark
+
+" enable bold/italic
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
+
 autocmd ColorScheme OceanicNext highlight Normal ctermbg=235
 colorscheme OceanicNext

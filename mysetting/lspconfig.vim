@@ -4,8 +4,16 @@ lua << EOF
 require'lspconfig'.pyright.setup{}
 -- require'lspconfig'.html.setup{}
 -- Javascript
--- require'lspconfig'.denols.setup{}
-require'lspconfig'.tsserver.setup{}
+--require'lspconfig'.denols.setup{
+--  cmd = { "deno", "lsp" },
+--  on_attach = on_attach,
+--  root_dir = require('lspconfig').util.root_pattern("package.json"),
+--  init_options = {
+--    lint = true,
+--    unstable = true,
+--  },
+--}
+-- require'lspconfig'.tsserver.setup{}
 -- Ruby
 require'lspconfig'.solargraph.setup{}
 -- require'lspconfig'.sorbet.setup{}

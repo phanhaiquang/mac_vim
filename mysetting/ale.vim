@@ -3,21 +3,24 @@
 let g:ale_enabled = 1
 
 " if we enable this, it seems conflict with diagnose
-" remove deno from the list because it reports error on import
 let g:ale_linters = {}
 "let g:ale_linters = {
-"\   'javascriptreact': ['cspell', 'eslint', 'fecs', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'tsserver', 'xo'],
-"\   'javascript': ['cspell', 'eslint', 'fecs', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'tsserver', 'xo'],
-"\   'ruby': ['rubocop', 'prettier'],
-"\   'eruby': ['erblint', 'erb', 'erubis', 'ruumba', 'tidy'],
-"\   'json': ['jsonlint'],
-"\}
+"      \   'javascriptreact': ['deno', 'eslint'],
+"      \   'javascript': ['deno', 'eslint'],
+"      \   'ruby': ['rubocop', 'prettier'],
+"      \   'eruby': ['erblint', 'erb', 'erubis', 'ruumba', 'tidy'],
+"      \   'json': ['jsonlint'],
+"      \}
+
+" Note: add deno-lint-ignore-file to ignore an error
+" some errors could not be suppressed
+"// deno-lint-ignore-file no-window-prefix
 
 let g:ale_fixers = {}
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_enter = 1
-"let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_delay = 300
 
 "let g:ale_open_list = 1
@@ -34,13 +37,15 @@ let g:ale_sign_info = 'ℹ'
 let g:ale_fixers['*'] = ['remove_trailing_lines', 'trim_whitespace']
 
 " javascript
-let g:ale_linters['javascript'] = ['prettier_standard', 'eslint', 'prettier']
-let g:ale_linters['javascriptreact'] = ['prettier_standard', 'eslint', 'prettier']
+let g:ale_linters['javascript'] = ['deno', 'prettier_standard', 'eslint', 'prettier']
+let g:ale_linters['javascriptreact'] = ['deno', 'prettier_standard', 'eslint', 'prettier']
+
 let g:ale_fixers['javascript'] = ['prettier_standard', 'eslint', 'prettier']
+let g:ale_fixers['javascriptreact'] = ['prettier_standard', 'eslint', 'prettier']
 let g:ale_javascript_prettier_options = '--trailing-comma es5 --write'
+let g:ale_javascriptreact_prettier_options = '--trailing-comma es5 --write'
 
 " ruby
-"let g:ale_fixers['ruby'] = ['prettier_standard', 'prettier', 'rubocop']
 let g:ale_fixers['ruby'] = ['prettier', 'rubocop']
 let g:ale_ruby_rubocop_auto_correct_all = 1
 let g:ale_ruby_rubocop_options = '-A'
@@ -59,3 +64,5 @@ let g:ale_eruby_erblint_options = '--autocorrect'
 " tidy -export-default-config > ~/.tidy_config
 let g:ale_eruby_tidy_options = '-config ~/.tidy_config'
 let g:ale_html_tidy_options = '-config ~/.tidy_config'
+
+let g:ale_echo_msg_format = '[%linter% %code%] %s'

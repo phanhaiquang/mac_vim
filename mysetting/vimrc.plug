@@ -84,6 +84,7 @@ call plug#begin(PluggedDir())
     Plug 'honza/vim-snippets', {'for': ['ruby', 'python', 'rust', 'dart']}
     Plug 'vim-scripts/SyntaxComplete', {'for': ['ruby', 'python', 'rust', 'dart']}
     Plug 'pocke/rbs.vim', {'for': ['rbs']}
+    Plug 'Yggdroot/indentLine'  " show a line for tab position (index)
 
     "" Flutter : coverred by coc-flutter
     "Plug 'thosakwe/vim-flutter', {'for': ['flutter', 'dart']}
@@ -97,9 +98,10 @@ call plug#begin(PluggedDir())
     " LSP does not support all features, still need ALE
     Plug 'w0rp/ale'
 
+    Plug 'mhinz/vim-startify' " show recent files on start-up
+    Plug 'mhinz/vim-janah' "colorstheme for neovim
+
     if has('nvim')
-      Plug 'mhinz/vim-startify' " project management
-      Plug 'mhinz/vim-janah' "colorstheme for neovim
       "Plug 'joshdick/onedark.vim' "colorstheme for neovim
 
       Plug 'github/copilot.vim' "copilot.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
@@ -112,27 +114,16 @@ call plug#begin(PluggedDir())
       Plug 'vim-airline/vim-airline-themes'
 
       " replace ctrlp by telescope
-      "Plug 'ctrlpvim/ctrlp.vim' "ctrlp.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
+      Plug 'ctrlpvim/ctrlp.vim' "ctrlp.vim is a Vim plugin that provides a more convenient way to navigate through your files and directories
       Plug 'nvim-telescope/telescope.nvim' " search file, definitions
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-      " LSP: Language Server Protocol --> look like coc.nvim already cover these ?
       Plug 'neovim/nvim-lspconfig'
       Plug 'glepnir/lspsaga.nvim'
       Plug 'neoclide/coc.nvim', {'branch': 'release'} "make nvim as IDE
-
-      " coc.nvim coverred these features ?
-      "Plug 'williamboman/nvim-lsp-installer'
-      "Plug 'prabirshrestha/vim-lsp'
-
-      " vim-lsp coverred these features ?
-      "Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' } "language client, code action?
-      "Plug 'junegunn/fzf' "multi-entry selection UI
     else
-
+      "Plug 'mhartington/oceanic-next' "colorstheme
       Plug 'mileszs/ack.vim', {'on': 'Ack'}
-      Plug 'mhartington/oceanic-next' "colorstheme
-      Plug 'Yggdroot/indentLine'
       Plug 'vim-scripts/cscope.vim'
       Plug 'itchyny/lightline.vim'
       Plug 'ctrlpvim/ctrlp.vim', {'do': ':CtrpInstall'}
@@ -207,7 +198,7 @@ function! LoadConfigs()
     " by if/else
     call LoadConfig(".", "~/.vim/mysetting/fold.vim")
     call LoadConfig(".", "~/.vim/mysetting/unicode.vim")
-    call LoadConfig(".", "~/.vim/mysetting/web.vim")
+    "call LoadConfig(".", "~/.vim/mysetting/web.vim")
     call LoadConfig(".", "~/.vim/mysetting/function.vim")
     call LoadConfig(".", "~/.vim/mysetting/refresh.vim")
     call LoadConfig(".", "~/.vim/mysetting/flow.vim")

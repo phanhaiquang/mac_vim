@@ -9,7 +9,7 @@
 "  K       show_documentation
 "  ,rn     coc-rename
 "  ,f      coc-format-selected
-"  ,aa      coc-codeaction-selected
+"  ,aa     coc-codeaction-selected
 "  ,ac     coc-codeaction
 "  ,ff     coc-fix-current
 "  <space>e , <space>f     Explorer
